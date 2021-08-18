@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_list/app/core/widget/app_field.dart';
 import 'package:todo_list/app/core/widget/todo_logo.dart';
 import 'package:todo_list/app/modules/auth/login/login_controller.dart';
 
@@ -31,9 +32,14 @@ class LoginPage extends StatelessWidget {
                     child: Form(
                       child: Column(
                         children: [
-                          TextFormField(),
+                          AppField(
+                            label: "E-mail",
+                          ),
                           SizedBox(height: 20),
-                          TextFormField(),
+                          AppField(
+                            obscureText: true,
+                            label: "Senha",
+                          ),
                           SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,10 +71,11 @@ class LoginPage extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border(
-                            top: BorderSide(
-                          width: 2,
-                          color: Colors.grey.withAlpha(50),
-                        )),
+                          top: BorderSide(
+                            width: 2,
+                            color: Colors.grey.withAlpha(50),
+                          ),
+                        ),
                         color: Color(0xffF0F3F7),
                       ),
                       child: Column(
