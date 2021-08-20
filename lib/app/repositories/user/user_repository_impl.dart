@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list/app/exception/auth_exception.dart';
 
-abstract class IUserRepository {
-  Future<User?> register(String email, String password);
-}
+import 'user_repository_interface.dart';
 
-class UserRepository implements IUserRepository {
+class UserRepositoryImpl implements IUserRepository {
   FirebaseAuth _firebaseAuth;
 
-  UserRepository({required FirebaseAuth firebaseAuth})
+  UserRepositoryImpl({required FirebaseAuth firebaseAuth})
       : _firebaseAuth = firebaseAuth;
 
   @override
@@ -20,7 +18,6 @@ class UserRepository implements IUserRepository {
     } on FirebaseAuthException catch (e, s) {
       print(e);
       print(s);
-      //email-already-exists
       if (e.code == 'email-already-in-use') {
         final loginTypes =
             await _firebaseAuth.fetchSignInMethodsForEmail(email);
