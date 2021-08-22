@@ -103,7 +103,8 @@ class LoginPage extends StatelessWidget {
                                 child: Text("Cadastre-se"),
                               )
                             ],
-                          )
+                          ),
+                          SizedBox(height: 10),
                         ],
                       ),
                     ),
