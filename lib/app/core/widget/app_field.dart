@@ -8,6 +8,7 @@ class AppField extends StatelessWidget {
   final ValueNotifier<bool> obscureTextVN;
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
+  final FocusNode? focusNode;
 
   AppField({
     Key? key,
@@ -16,6 +17,7 @@ class AppField extends StatelessWidget {
     this.obscureText = false,
     this.controller,
     this.validator,
+    this.focusNode,
   })  : assert(obscureText == true ? suffixIconButton == null : true,
             'obscureText não pode ser enviado em conjunto com suffixIconButton'),
         obscureTextVN = ValueNotifier(obscureText),
@@ -29,6 +31,7 @@ class AppField extends StatelessWidget {
         return TextFormField(
           controller: controller,
           validator: validator,
+          focusNode: focusNode,
           decoration: InputDecoration(
             labelText: label,
             labelStyle: TextStyle(
@@ -45,9 +48,7 @@ class AppField extends StatelessWidget {
                 (obscureText == true
                     ? IconButton(
                         icon: Icon(
-                          !obscureTextValue
-                              ? TodoListIcons.eye_slash
-                              : TodoListIcons.eye,
+                          !obscureTextValue ? TodoListIcons.eye_slash : TodoListIcons.eye,
                           size: 18,
                         ),
                         onPressed: () {
