@@ -102,4 +102,10 @@ class UserRepositoryImpl implements IUserRepository {
       }
     }
   }
+
+  @override
+  Future<void> googleLogout() async {
+    await GoogleSignIn().signOut();
+    _firebaseAuth.signOut();
+  }
 }
