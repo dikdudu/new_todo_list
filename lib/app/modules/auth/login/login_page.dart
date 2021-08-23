@@ -3,6 +3,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_list/app/core/notifier/app_listener_notifier.dart';
+import 'package:todo_list/app/core/ui/app_messages.dart';
 import 'package:todo_list/app/core/widget/app_field.dart';
 import 'package:todo_list/app/core/widget/todo_logo.dart';
 import 'package:todo_list/app/modules/auth/login/login_controller.dart';
@@ -19,12 +20,20 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailEC = TextEditingController();
   final _passwordEC = TextEditingController();
+  final _emailFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
     AppListenerNotifier(changeNotifier: context.read<LoginController>()).listener(
         context: context,
+        everCallBack: (notifier, listenerInstance) {
+          if (notifier is LoginController) {
+            if (notifier.hasInfo) {
+              AppMessages.of(context).showInfo(notifier.infoMessage!);
+            }
+          }
+        },
         successCallBack: (notifier, listenerInstance) {
           print('Login efetuado com sucesso');
         });
@@ -55,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: [
                             AppField(
+                              focusNode: _emailFocus,
                               controller: _emailEC,
                               label: "E-mail",
                               validator: Validatorless.multiple([
@@ -77,7 +87,14 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (_emailEC.text.isNotEmpty) {
+                                      context.read<LoginController>().forgotPassword(_emailEC.text);
+                                    } else {
+                                      _emailFocus.requestFocus();
+                                      AppMessages.of(context).showError('Digite um e-mail para recuperar a senha');
+                                    }
+                                  },
                                   child: Text("Esqueceu sua senha?"),
                                 ),
                                 ElevatedButton(
@@ -129,7 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: BorderSide.none,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<LoginController>().googleLogin();
+                              },
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

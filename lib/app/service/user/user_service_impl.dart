@@ -12,10 +12,17 @@ class UserServiceImpl implements IUserService {
   }) : _userRepoository = userRepository;
 
   @override
-  Future<User?> register(String email, String password) =>
-      _userRepoository.register(email, password);
+  Future<User?> register(String email, String password) => _userRepoository.register(email, password);
 
   @override
-  Future<User?> login(String email, String password) =>
-      _userRepoository.login(email, password);
+  Future<User?> login(String email, String password) => _userRepoository.login(email, password);
+
+  @override
+  Future<void> forgotPassword(String email) => _userRepoository.forgotPassword(email);
+
+  @override
+  Future<User?> googleLogin() => _userRepoository.googleLogin();
+
+  @override
+  Future<void> googleLogout() => _userRepoository.googleLogout();
 }
