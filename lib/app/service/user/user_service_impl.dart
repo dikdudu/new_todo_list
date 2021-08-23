@@ -14,4 +14,8 @@ class UserServiceImpl implements IUserService {
   @override
   Future<User?> register(String email, String password) =>
       _userRepoository.register(email, password);
+
+  @override
+  Future<User?> login(String email, String password) =>
+      _userRepoository.login(email, password);
 }
