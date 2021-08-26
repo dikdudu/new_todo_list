@@ -1,17 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/app/core/notifier/app_listener_notifier.dart';
 import 'package:todo_list/app/core/ui/theme_extensions.dart';
 import 'package:todo_list/app/core/widget/app_field.dart';
 import 'package:todo_list/app/modules/tasks/task_create_controller.dart';
 import 'package:todo_list/app/modules/tasks/widgets/calendar_button.dart';
+import 'package:validatorless/validatorless.dart';
 
-class TaskCreatePage extends StatelessWidget {
+class TaskCreatePage extends StatefulWidget {
   final TaskCreateController _controller;
 
-  const TaskCreatePage({
+  TaskCreatePage({
     Key? key,
     required TaskCreateController controller,
   })  : _controller = controller,
         super(key: key);
+
+  @override
+  _TaskCreatePageState createState() => _TaskCreatePageState();
+}
+
+class _TaskCreatePageState extends State<TaskCreatePage> {
+  final _descriptionEC = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    AppListenerNotifier(
+      changeNotifier: widget._controller,
+    ).listener(
+      context: context,
+      successCallBack: (notifier, listenerInstance) {
+        listenerInstance.dispose();
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _descriptionEC.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +61,7 @@ class TaskCreatePage extends StatelessWidget {
         ],
       ),
       body: Form(
+        key: _formKey,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 30),
           child: Column(
@@ -45,7 +76,11 @@ class TaskCreatePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30),
-              AppField(label: ''),
+              AppField(
+                label: '',
+                controller: _descriptionEC,
+                validator: Validatorless.required('Descrição é obrigatória'),
+              ),
               SizedBox(height: 20),
               CalendarButton(),
             ],
@@ -53,7 +88,12 @@ class TaskCreatePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          var formvalid = _formKey.currentState?.validate() ?? false;
+          if (formvalid) {
+            widget._controller.save(_descriptionEC.text);
+          }
+        },
         backgroundColor: context.primaryColor,
         label: Text(
           'Salvar Task',
