@@ -8,7 +8,7 @@ class HomeModule extends TodoListModule {
       : super(
           bindings: [
             ChangeNotifierProvider(
-              create: (_) => HomeController(),
+              create: (context) => HomeController(),
             ),
           ],
           routers: {
