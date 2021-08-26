@@ -24,6 +24,7 @@ class SqliteConnectionFactory {
   Future<Database> openConnection() async {
     var dataBasePath = await getDatabasesPath();
     var databasePathFinal = join(dataBasePath, _DATABASE_NAME);
+
     if (_db == null) {
       await _lock.synchronized(() async {
         if (_db == null) {

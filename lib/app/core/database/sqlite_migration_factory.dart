@@ -1,10 +1,10 @@
 import 'package:todo_list/app/core/database/migrations/migration_v1.dart';
-import 'package:todo_list/app/core/database/migrations/migrations.dart';
+import 'package:todo_list/app/core/database/migrations/migration.dart';
 
 class SqliteMigrationFactory {
-  List<Migrations> getCreateMigration() => [
+  List<Migration> getCreateMigration() => [
         MigrationV1(),
       ];
 
-  List<Migrations> getUpgradeMigration(int version) => [];
+  List<Migration> getUpgradeMigration(int version) => [];
 }
