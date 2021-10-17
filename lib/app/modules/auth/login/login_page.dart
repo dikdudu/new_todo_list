@@ -25,18 +25,19 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    AppListenerNotifier(changeNotifier: context.read<LoginController>()).listener(
-        context: context,
-        everCallBack: (notifier, listenerInstance) {
-          if (notifier is LoginController) {
-            if (notifier.hasInfo) {
-              AppMessages.of(context).showInfo(notifier.infoMessage!);
-            }
-          }
-        },
-        successCallBack: (notifier, listenerInstance) {
-          print('Login efetuado com sucesso');
-        });
+    AppListenerNotifier(changeNotifier: context.read<LoginController>())
+        .listener(
+            context: context,
+            everCallBack: (notifier, listenerInstance) {
+              if (notifier is LoginController) {
+                if (notifier.hasInfo) {
+                  AppMessages.of(context).showInfo(notifier.infoMessage!);
+                }
+              }
+            },
+            successCallBack: (notifier, listenerInstance) {
+              print('Login efetuado com sucesso');
+            });
   }
 
   @override
@@ -49,16 +50,17 @@ class _LoginPageState extends State<LoginPage> {
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: constraints.maxHeight,
-                minWidth: constraints.maxHeight,
+                minWidth: constraints.maxWidth,
               ),
               child: IntrinsicHeight(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(height: 10),
+                    SizedBox(height: 60),
                     TodoLogo(),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 20),
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -79,7 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                               label: "Senha",
                               validator: Validatorless.multiple([
                                 Validatorless.required('Senha obrigatória'),
-                                Validatorless.min(6, 'Senha deve conter pelo menos 6 caracteres'),
+                                Validatorless.min(6,
+                                    'Senha deve conter pelo menos 6 caracteres'),
                               ]),
                             ),
                             SizedBox(height: 10),
@@ -89,30 +92,38 @@ class _LoginPageState extends State<LoginPage> {
                                 TextButton(
                                   onPressed: () {
                                     if (_emailEC.text.isNotEmpty) {
-                                      context.read<LoginController>().forgotPassword(_emailEC.text);
+                                      context
+                                          .read<LoginController>()
+                                          .forgotPassword(_emailEC.text);
                                     } else {
                                       _emailFocus.requestFocus();
-                                      AppMessages.of(context).showError('Digite um e-mail para recuperar a senha');
+                                      AppMessages.of(context).showError(
+                                          'Digite um e-mail para recuperar a senha');
                                     }
                                   },
                                   child: Text("Esqueceu sua senha?"),
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                    final formValid = _formKey.currentState?.validate() ?? false;
+                                    final formValid =
+                                        _formKey.currentState?.validate() ??
+                                            false;
                                     if (formValid) {
                                       final email = _emailEC.text;
                                       final password = _passwordEC.text;
-                                      context.read<LoginController>().login(email, password);
+                                      context
+                                          .read<LoginController>()
+                                          .login(email, password);
                                     }
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 24),
                                     child: Text("Login"),
                                   ),
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                   ),
                                 ),
@@ -156,7 +167,8 @@ class _LoginPageState extends State<LoginPage> {
                                 Text("Não tem conta?"),
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed("/register");
+                                    Navigator.of(context)
+                                        .pushNamed("/register");
                                   },
                                   child: Text("Cadastre-se"),
                                 )

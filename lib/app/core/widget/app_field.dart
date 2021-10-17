@@ -36,11 +36,13 @@ class AppField extends StatelessWidget {
             labelText: label,
             labelStyle: TextStyle(
               fontSize: 15,
-              color: Colors.black,
+              color: Colors.grey.shade700,
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(100),
               borderSide: BorderSide(color: Colors.red),
             ),
             isDense: true,
@@ -48,7 +50,9 @@ class AppField extends StatelessWidget {
                 (obscureText == true
                     ? IconButton(
                         icon: Icon(
-                          !obscureTextValue ? TodoListIcons.eye_slash : TodoListIcons.eye,
+                          !obscureTextValue
+                              ? TodoListIcons.eye_slash
+                              : TodoListIcons.eye,
                           size: 18,
                         ),
                         onPressed: () {

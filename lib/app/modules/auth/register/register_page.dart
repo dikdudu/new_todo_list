@@ -32,7 +32,8 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
-    final appListener = AppListenerNotifier(changeNotifier: context.read<RegisterController>());
+    final appListener =
+        AppListenerNotifier(changeNotifier: context.read<RegisterController>());
     appListener.listener(
       context: context,
       successCallBack: (notifier, listenerInstance) {
@@ -128,7 +129,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     validator: Validatorless.multiple(
                       [
                         Validatorless.required('Senha Obrigatória'),
-                        Validatorless.min(6, 'Senha deve ter pelo menos 6 caracteres'),
+                        Validatorless.min(
+                            6, 'Senha deve ter pelo menos 6 caracteres'),
                       ],
                     ),
                   ),
@@ -139,8 +141,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: true,
                     validator: Validatorless.multiple(
                       [
-                        Validatorless.required("É obrigatório confirmar a senha"),
-                        Validators.compare(_passwordEC, "As senhas devem ser iguais")
+                        Validatorless.required(
+                            "É obrigatório confirmar a senha"),
+                        Validators.compare(
+                            _passwordEC, "As senhas devem ser iguais")
                       ],
                     ),
                   ),
@@ -149,11 +153,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     alignment: Alignment.bottomRight,
                     child: ElevatedButton(
                       onPressed: () {
-                        final formValid = _formKey.currentState?.validate() ?? false;
+                        final formValid =
+                            _formKey.currentState?.validate() ?? false;
                         if (formValid) {
                           final email = _emailEC.text;
                           final password = _passwordEC.text;
-                          context.read<RegisterController>().registerUser(email, password);
+                          context
+                              .read<RegisterController>()
+                              .registerUser(email, password);
                         }
                       },
                       child: Padding(

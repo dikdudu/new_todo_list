@@ -31,7 +31,8 @@ class AppListenerNotifier {
         if (errorCallBack != null) {
           errorCallBack(changeNotifier, this);
         }
-        AppMessages.of(context).showError(changeNotifier.error ?? 'Erro interno');
+        AppMessages.of(context)
+            .showError(changeNotifier.error ?? 'Erro interno');
       } else if (changeNotifier.isSuccess) {
         successCallBack(changeNotifier, this);
       }
@@ -43,8 +44,11 @@ class AppListenerNotifier {
   }
 }
 
-typedef SuccessVoidCallBack = void Function(AppChangeNotifier notifier, AppListenerNotifier listenerInstance);
+typedef SuccessVoidCallBack = void Function(
+    AppChangeNotifier notifier, AppListenerNotifier listenerInstance);
 
-typedef ErrorVoidCallBack = void Function(AppChangeNotifier notifier, AppListenerNotifier listenerInstance);
+typedef ErrorVoidCallBack = void Function(
+    AppChangeNotifier notifier, AppListenerNotifier listenerInstance);
 
-typedef EverVoidCallBack = void Function(AppChangeNotifier notifier, AppListenerNotifier listenerInstance);
+typedef EverVoidCallBack = void Function(
+    AppChangeNotifier notifier, AppListenerNotifier listenerInstance);

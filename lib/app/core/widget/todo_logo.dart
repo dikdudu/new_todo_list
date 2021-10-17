@@ -9,10 +9,10 @@ class TodoLogo extends StatelessWidget {
     return Column(
       children: [
         Image.asset(
-          "assets/images/logo.png",
-          height: 200,
+          "assets/images/logo2.png",
+          height: 100,
         ),
-        Text('Todo List', style: context.textTheme.headline6),
+        Text('Tarefas e Despesas', style: context.textTheme.headline6),
       ],
     );
   }
